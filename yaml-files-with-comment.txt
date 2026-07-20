@@ -1,0 +1,30 @@
+1. First file
+name: Spring boot maven build
+
+# Triggers mentioned below will trigger the workflow to run
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # In this section, we define the steps to be executed in the job (individual tasks)
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # This action checks out your repository under $GITHUB_WORKSPACE, so your workflow can access it. Actions are reusable units of code. You can find more actions in the GitHub Marketplace.
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with: # with is used to specify the input parameters for the action. In this case, we are specifying the Java distribution and version to be used in the workflow.
+          distribution: "temurin"
+          java-version: "17"
+          cache: "maven" # This will cache the Maven dependencies to speed up the build process in future runs.
+
+      - name: Build with Maven
+        run: ./mvnw clean package
