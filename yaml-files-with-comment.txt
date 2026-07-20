@@ -27,4 +27,13 @@ jobs:
           cache: "maven" # This will cache the Maven dependencies to speed up the build process in future runs.
 
       - name: Build with Maven
-        run: ./mvnw clean package
+        run: chmod +x ./mvnw && ./mvnw clean package
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spring-boot-app
+          with:
+            name: spring-boot-app
+            path: target/*.jar
+            retention-policy: 5
